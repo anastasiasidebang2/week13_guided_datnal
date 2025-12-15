@@ -7,10 +7,10 @@ import pandas as pd
 
 MODEL_PATH = Path(__file__).with_name("knn_model.sav")
 FEATURE_COLUMNS = [
-    "SepalLengthCm",
-    "SepalWidthCm",
-    "PetalLengthCm",
-    "PetalWidthCm",
+    "sepal_length",
+    "sepal_width",
+    "petal_length",
+    "petal_width",
 ]
 
 
@@ -25,5 +25,6 @@ def load_model():
 def predict(data):
     """Run prediction on a 2D iterable of feature values."""
     model = load_model()
-    frame = pd.DataFrame(data, columns=FEATURE_COLUMNS)
+    columns = list(getattr(model, "feature_names_in_", FEATURE_COLUMNS))
+    frame = pd.DataFrame(data, columns=columns)
     return model.predict(frame)
